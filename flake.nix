@@ -106,6 +106,7 @@
                     "Reeder Classic" = 1529448980;
                     "TestFlight" = 899247664;
                     "WhatsApp" = 310633997;
+                    "Telegram" = 747648890;
                 };
             };
 
@@ -142,6 +143,7 @@
                         
                         "/System/Applications/Messages.app"
                         "/Applications/WhatsApp.app"
+                        "/Applications/Telegram.app"
                         
                         "/System/Applications/Music.app"
                         "/System/Applications/Photos.app"
