@@ -41,6 +41,7 @@
                 pkgs.lazygit
                 pkgs.cargo 
                 pkgs.rustc
+                pkgs.iterm2
             ];
 
             # Auto upgrade nix package and the daemon service.
@@ -95,7 +96,6 @@
                     "betterdisplay"
                     "discord"
                     "figma"
-                    "iterm2"
                     "notion"
                     "postman"
                     "tower"
@@ -136,7 +136,7 @@
                         "/Applications/Arc.app"
 
                         "${pkgs.vscode.outPath}/Applications/Visual Studio Code.app"
-                        "/System/Applications/Utilities/Terminal.app"
+                        "${pkgs.iterm2.outPath}/Applications/iTerm2.app"
                         
                         "/Applications/1Password.app"
                         "/Applications/Slack.app"
