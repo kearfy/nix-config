@@ -42,6 +42,8 @@
                 pkgs.cargo 
                 pkgs.rustc
                 pkgs.iterm2
+                pkgs.autojump
+                pkgs.thefuck
             ];
 
             # Auto upgrade nix package and the daemon service.
@@ -86,10 +88,7 @@
                     cleanup = "none";
                 };
                 taps = [ ];
-                brews = [ 
-                    "autojump"
-                    "thefuck"
-                ];
+                brews = [ ];
                 casks = [
                     # "1password"
                     "arc"
