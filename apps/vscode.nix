@@ -20,7 +20,9 @@
         ];
 
         userSettings = {
-            
+            extensions.autoCheckUpdates = false;
+            update.mode = "none";
+            git.confirmSync = false;
         };
     };
 }
