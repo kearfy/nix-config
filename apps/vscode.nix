@@ -14,6 +14,9 @@
 
             # Language support
             surrealdb.surrealql
+            ms-vscode.makefile-tools
+            rust-lang.rust-analyzer
+            dustypomerleau.rust-syntax
         ];
 
         userSettings = {

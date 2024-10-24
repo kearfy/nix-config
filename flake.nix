@@ -39,6 +39,8 @@
                 pkgs.vim
                 pkgs.wget
                 pkgs.lazygit
+                pkgs.cargo 
+                pkgs.rustc
             ];
 
             # Auto upgrade nix package and the daemon service.
