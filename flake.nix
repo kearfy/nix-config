@@ -83,7 +83,10 @@
                     cleanup = "none";
                 };
                 taps = [ ];
-                brews = [ ];
+                brews = [ 
+                    "autojump"
+                    "thefuck"
+                ];
                 casks = [
                     # "1password"
                     "arc"
