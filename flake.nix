@@ -123,6 +123,7 @@
               "tower"
               "zed"
               "zoom"
+              "airbuddy"
             ];
             masApps = {
               "1Password Safari" = 1569813296;
@@ -154,6 +155,8 @@
               minimize-to-application = true;
               orientation = "bottom";
               show-process-indicators = true;
+              show-recents = false;
+              static-only = false;
               persistent-apps = [
                 "/Applications/Arc.app"
 
