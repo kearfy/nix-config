@@ -27,16 +27,12 @@
       extensions.autoCheckUpdates = false;
       update.mode = "none";
 
-      git = {
-        confirmSync = false;
-        autoFetch = true;
-      };
+      git.confirmSync = false;
+      git.autoFetch = true;
 
-      editor = {
-        cursorSmoothCaretAnimation = "on";
-        smoothScrolling = true;
-      };
-
+      editor.cursorSmoothCaretAnimation = "on";
+      editor.smoothScrolling = true;
+      
       terminal.integrated.smoothScrolling = true;
     };
   };
