@@ -18,6 +18,8 @@
       ms-vscode.makefile-tools
       rust-lang.rust-analyzer
       dustypomerleau.rust-syntax
+      astro-build.astro-vscode
+      biomejs.biome
     ];
 
     userSettings = {
