@@ -64,6 +64,9 @@
             pkgs.autojump
             pkgs.thefuck
             pkgs.direnv
+            pkgs.biome
+            pkgs.nodejs_20
+            pkgs.bun
           ];
 
           # Auto upgrade nix package and the daemon service.
