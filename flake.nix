@@ -209,6 +209,11 @@
               show-thumbnail = true;
               type = "png";
             };
+            WindowManager = {
+              HideDesktop = true;
+              StandardHideDesktopIcons = true;
+              GloballyEnabled = true;
+            };
           };
 
           # System Startup settings
