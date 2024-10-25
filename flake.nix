@@ -63,6 +63,7 @@
             pkgs.iterm2
             pkgs.autojump
             pkgs.thefuck
+            pkgs.direnv
           ];
 
           # Auto upgrade nix package and the daemon service.

@@ -22,6 +22,7 @@
       "ssh"
       "thefuck"
       "vscode"
+      "direnv"
     ];
     theme = "robbyrussell";
   };
