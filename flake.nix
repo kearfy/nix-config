@@ -127,6 +127,7 @@
             ];
             masApps = {
               "1Password Safari" = 1569813296;
+              "Flighty" = 1358823008;
               "Home Assistant" = 1099568401;
               "Microsoft Excel" = 462058435;
               "Microsoft PowerPoint" = 462062816;
