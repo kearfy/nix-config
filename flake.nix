@@ -55,8 +55,6 @@
         }:
         {
 
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
           environment.systemPackages = [
             pkgs.vim
             pkgs.wget
@@ -115,7 +113,7 @@
             taps = [ ];
             brews = [ ];
             casks = [
-              # "1password"
+              "1password"
               "arc"
               "betterdisplay"
               "discord"
@@ -261,9 +259,6 @@
             home-manager.sharedModules = [
               mac-app-util.homeManagerModules.default
             ];
-
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
           }
         ];
       };
