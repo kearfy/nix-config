@@ -12,6 +12,7 @@
       # Nix
       bbenoist.nix
       jnoortheen.nix-ide
+      mkhl.direnv
 
       # Language support
       surrealdb.surrealql
