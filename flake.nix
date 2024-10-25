@@ -167,17 +167,13 @@
                 "/Applications/Slack.app"
                 "/Applications/Discord.app"
 
-                "/System/Applications/Mail.app"
+                "/System/Applications/Music.app"
                 "/System/Applications/Calendar.app"
-                "/System/Applications/Notes.app"
 
+                "/System/Applications/Mail.app"
                 "/System/Applications/Messages.app"
                 "/Applications/WhatsApp.app"
                 "/Applications/Telegram.app"
-
-                "/System/Applications/Music.app"
-                "/System/Applications/Photos.app"
-                "/System/Applications/Photo Booth.app"
 
                 "/System/Applications/Home.app"
                 "/System/Applications/App Store.app"
