@@ -28,6 +28,8 @@
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
   outputs =
@@ -41,6 +43,7 @@
       homebrew-cask,
       homebrew-bundle,
       nix-vscode-extensions,
+      mac-app-util
     }:
     let
       darwinConfiguration =
@@ -224,6 +227,7 @@
       # Build darwin flake using:
       darwinConfigurations.michas-MacBook-Pro = nix-darwin.lib.darwinSystem {
         modules = [
+          mac-app-util.darwinModules.default
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
@@ -256,6 +260,10 @@
             home-manager.extraSpecialArgs = {
               inherit inputs nix-vscode-extensions;
             };
+
+            home-manager.sharedModules = [
+              mac-app-util.homeManagerModules.default
+            ];
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
