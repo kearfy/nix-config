@@ -21,6 +21,7 @@
       dustypomerleau.rust-syntax
       astro-build.astro-vscode
       biomejs.biome
+      unifiedjs.vscode-mdx
     ];
 
     userSettings = {
