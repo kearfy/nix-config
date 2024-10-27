@@ -22,6 +22,7 @@
       astro-build.astro-vscode
       biomejs.biome
       unifiedjs.vscode-mdx
+      ms-vscode.vscode-typescript-next
     ];
 
     userSettings = {
