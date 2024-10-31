@@ -150,6 +150,8 @@
               autohide = true;
               autohide-delay = 0.0;
               autohide-time-modifier = 0.4;
+              # Do not automatically rearrange spaces (Annoying!!)
+              mru-spaces = false;
               expose-animation-duration = 0.4;
               launchanim = true;
               mineffect = "genie";
