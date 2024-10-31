@@ -23,6 +23,9 @@
       biomejs.biome
       unifiedjs.vscode-mdx
       ms-vscode.vscode-typescript-next
+      mrmlnc.vscode-scss
+      bradlc.vscode-tailwindcss
+      oven.bun-vscode
     ];
 
     userSettings = {
