@@ -5,6 +5,7 @@
     shellAliases = {
       ll = "ls -l";
       lg = "lazygit";
+      sr = "surreal sql --conn memory --user root --pass root --ns test --db test --pretty";
     };
   };
 
