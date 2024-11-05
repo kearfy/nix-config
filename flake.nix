@@ -68,6 +68,7 @@
             pkgs.biome
             pkgs.nodejs_20
             pkgs.bun
+            pkgs.pnpm
           ];
 
           # Auto upgrade nix package and the daemon service.
