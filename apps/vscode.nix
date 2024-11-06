@@ -26,6 +26,7 @@
       mrmlnc.vscode-scss
       bradlc.vscode-tailwindcss
       oven.bun-vscode
+      tauri-apps.tauri-vscode
     ];
 
     userSettings = {
