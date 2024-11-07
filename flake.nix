@@ -69,6 +69,7 @@
             pkgs.nodejs_20
             pkgs.bun
             pkgs.pnpm
+            pkgs.deno
           ];
 
           # Auto upgrade nix package and the daemon service.
