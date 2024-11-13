@@ -61,6 +61,7 @@
             pkgs.lazygit
             pkgs.cargo
             pkgs.rustc
+            pkgs.clippy
             pkgs.iterm2
             pkgs.autojump
             pkgs.thefuck
