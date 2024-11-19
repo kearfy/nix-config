@@ -27,6 +27,7 @@
       bradlc.vscode-tailwindcss
       oven.bun-vscode
       tauri-apps.tauri-vscode
+      tamuratak.vscode-lezer
     ];
 
     userSettings = {
