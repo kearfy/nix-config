@@ -30,6 +30,7 @@
       tamuratak.vscode-lezer
       github.copilot
       github.copilot-chat
+      wmaurer.change-case
     ];
 
     userSettings = {
