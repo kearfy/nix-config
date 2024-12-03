@@ -28,6 +28,8 @@
       oven.bun-vscode
       tauri-apps.tauri-vscode
       tamuratak.vscode-lezer
+      github.copilot
+      github.copilot-chat
     ];
 
     userSettings = {
