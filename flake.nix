@@ -127,6 +127,7 @@
               "zed"
               "zoom"
               "airbuddy"
+              "linear-linear"
             ];
             masApps = {
               "1Password Safari" = 1569813296;
@@ -172,6 +173,7 @@
                 "/Applications/1Password.app"
                 "/Applications/Slack.app"
                 "/Applications/Discord.app"
+                "/Applications/Linear.app"
 
                 "/System/Applications/Music.app"
                 "/System/Applications/Calendar.app"
