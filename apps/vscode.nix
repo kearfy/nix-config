@@ -31,6 +31,7 @@
       github.copilot
       github.copilot-chat
       wmaurer.change-case
+      million.million-lint
     ];
 
     userSettings = {
