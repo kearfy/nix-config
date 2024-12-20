@@ -71,6 +71,8 @@
             pkgs.bun
             pkgs.pnpm
             pkgs.deno
+            pkgs.ghostscript
+            pkgs.graphicsmagick
           ];
 
           # Auto upgrade nix package and the daemon service.
