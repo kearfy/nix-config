@@ -30,7 +30,7 @@
       tamuratak.vscode-lezer
       github.copilot
       github.copilot-chat
-      wmaurer.change-case
+      cardinal90.multi-cursor-case-preserve
       million.million-lint
       yoavbls.pretty-ts-errors
       github.vscode-github-actions
