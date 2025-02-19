@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    rust-overlay.url = "github:oxalica/rust-overlay";
 
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -32,205 +33,202 @@
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nix-darwin,
-      nixpkgs,
-      home-manager,
-      nix-homebrew,
-      homebrew-core,
-      homebrew-cask,
-      homebrew-bundle,
-      nix-vscode-extensions,
-      mac-app-util
-    }:
+  outputs = inputs@{ self
+                  , nix-darwin
+                  , nixpkgs
+                  , rust-overlay
+                  , home-manager
+                  , nix-homebrew
+                  , homebrew-core
+                  , homebrew-cask
+                  , homebrew-bundle
+                  , nix-vscode-extensions
+                  , mac-app-util
+                  }:
     let
-      darwinConfiguration =
-        {
-          pkgs,
-          lib,
-          config,
-          ...
-        }:
-        {
+      darwinConfiguration = { pkgs, lib, config, ... }: {
+        # Add rust-overlay
+        nixpkgs.overlays = [ rust-overlay.overlays.default ];
 
-          environment.systemPackages = [
-            pkgs.vim
-            pkgs.wget
-            pkgs.lazygit
-            pkgs.cargo
-            pkgs.rustc
-            pkgs.clippy
-            pkgs.iterm2
-            pkgs.autojump
-            pkgs.thefuck
-            pkgs.direnv
-            pkgs.biome
-            pkgs.nodejs_20
-            pkgs.bun
-            pkgs.pnpm
-            pkgs.deno
-            pkgs.ghostscript
-            pkgs.graphicsmagick
+        environment.systemPackages = [
+          # Rust toolchain with specific version and wasm target
+          (pkgs.rust-bin.stable.latest.default.override {
+            targets = [ "wasm32-unknown-unknown" ];
+            extensions = [ "rust-src" "rust-analyzer" ];
+          })
+          pkgs.wasm-pack
+          pkgs.vim
+          pkgs.wget
+          pkgs.lazygit
+          pkgs.iterm2
+          pkgs.autojump
+          pkgs.thefuck
+          pkgs.direnv
+          pkgs.biome
+          pkgs.nodejs_22
+          pkgs.bun
+          pkgs.pnpm
+          pkgs.ghostscript
+          pkgs.graphicsmagick
+        ];
+
+        # Auto upgrade nix package and the daemon service.
+        services.nix-daemon.enable = true;
+        nix.package = pkgs.nix;
+
+        # Necessary for using flakes on this system.
+        nix.settings.experimental-features = "nix-command flakes";
+
+        # Create /etc/zshrc that loads the nix-darwin environment.
+        programs.zsh.enable = true; # default shell on catalina
+
+        # Set Git commit hash for darwin-version.
+        system.configurationRevision = self.rev or self.dirtyRev or null;
+
+        # Used for backwards compatibility, please read the changelog before changing.
+        system.stateVersion = 5;
+
+        nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+          "vscode"
+          "vscode-with-extensions"
+        ];
+
+        # The platform the configuration will be used on.
+        nixpkgs.hostPlatform = "aarch64-darwin";
+
+        # Allow using sudo with Touch ID
+        security.pam.enableSudoTouchIdAuth = true;
+
+        # Homebrew configuration
+        homebrew = {
+          enable = true;
+          global = {
+            autoUpdate = true;
+          };
+          onActivation = {
+            autoUpdate = true;
+            upgrade = true;
+            cleanup = "uninstall";
+          };
+          taps = [ ];
+          brews = [
+            "llvm"
           ];
-
-          # Auto upgrade nix package and the daemon service.
-          services.nix-daemon.enable = true;
-          nix.package = pkgs.nix;
-
-          # Necessary for using flakes on this system.
-          nix.settings.experimental-features = "nix-command flakes";
-
-          # Create /etc/zshrc that loads the nix-darwin environment.
-          programs.zsh.enable = true; # default shell on catalina
-
-          # Set Git commit hash for darwin-version.
-          system.configurationRevision = self.rev or self.dirtyRev or null;
-
-          # Used for backwards compatibility, please read the changelog before changing.
-          system.stateVersion = 5;
-
-          nixpkgs.config.allowUnfreePredicate =
-            pkg:
-            builtins.elem (lib.getName pkg) [
-              "vscode"
-              "vscode-with-extensions"
-            ];
-
-          # The platform the configuration will be used on.
-          nixpkgs.hostPlatform = "aarch64-darwin";
-
-          # Allow using sudo with Touch ID
-          security.pam.enableSudoTouchIdAuth = true;
-
-          # Homebrew configuration
-          homebrew = {
-            enable = true;
-            global = {
-              autoUpdate = true;
-            };
-            onActivation = {
-              autoUpdate = true;
-              upgrade = true;
-              cleanup = "uninstall";
-            };
-            taps = [ ];
-            brews = [ ];
-            casks = [
-              "1password"
-              "arc"
-              "betterdisplay"
-              "discord"
-              "figma"
-              "notion"
-              "postman"
-              "tower"
-              "zed"
-              "zoom"
-              "airbuddy"
-              "linear-linear"
-            ];
-            masApps = {
-              "1Password Safari" = 1569813296;
-              "Flighty" = 1358823008;
-              "Home Assistant" = 1099568401;
-              "Microsoft Excel" = 462058435;
-              "Microsoft PowerPoint" = 462062816;
-              "Microsoft Word" = 462054704;
-              "Reeder Classic" = 1529448980;
-              "TestFlight" = 899247664;
-              "WhatsApp" = 310633997;
-              "Telegram" = 747648890;
-            };
-          };
-
-          # System Settings
-          system.defaults = {
-            CustomUserPreferences = {
-              "com.apple.Music" = {
-                userWantsPlaybackNotifications = false;
-              };
-            };
-            dock = {
-              autohide = true;
-              autohide-delay = 0.0;
-              autohide-time-modifier = 0.4;
-              # Do not automatically rearrange spaces (Annoying!!)
-              mru-spaces = false;
-              expose-animation-duration = 0.4;
-              launchanim = true;
-              mineffect = "genie";
-              minimize-to-application = true;
-              orientation = "bottom";
-              show-process-indicators = true;
-              show-recents = false;
-              static-only = false;
-              persistent-apps = [
-                "/Applications/Arc.app"
-
-                "${pkgs.vscode.outPath}/Applications/Visual Studio Code.app"
-                "${pkgs.iterm2.outPath}/Applications/iTerm2.app"
-
-                "/Applications/1Password.app"
-                "/Applications/Slack.app"
-                "/Applications/Discord.app"
-                "/Applications/Linear.app"
-
-                "/System/Applications/Music.app"
-                "/System/Applications/Calendar.app"
-
-                "/System/Applications/Mail.app"
-                "/System/Applications/Messages.app"
-                "/Applications/WhatsApp.app"
-                "/Applications/Telegram.app"
-
-                "/System/Applications/Home.app"
-                "/System/Applications/App Store.app"
-                "/System/Applications/System Settings.app"
-              ];
-            };
-            finder = {
-              AppleShowAllExtensions = true;
-              AppleShowAllFiles = false;
-              FXDefaultSearchScope = "SCcf";
-              FXEnableExtensionChangeWarning = false;
-              FXPreferredViewStyle = "clmv";
-              QuitMenuItem = false;
-              ShowPathbar = true;
-              ShowStatusBar = false;
-            };
-            loginwindow = {
-              autoLoginUser = null;
-              DisableConsoleAccess = false;
-              GuestEnabled = false;
-              LoginwindowText = "micha.de.vries@surrealdb.com";
-              PowerOffDisabledWhileLoggedIn = false;
-              RestartDisabled = false;
-              RestartDisabledWhileLoggedIn = false;
-              SHOWFULLNAME = false;
-              ShutDownDisabled = false;
-              ShutDownDisabledWhileLoggedIn = false;
-              SleepDisabled = false;
-            };
-            screencapture = {
-              disable-shadow = true;
-              location = "~/Pictures/screenshots";
-              show-thumbnail = true;
-              type = "png";
-            };
-            WindowManager = {
-              HideDesktop = true;
-              StandardHideDesktopIcons = true;
-              GloballyEnabled = true;
-            };
-          };
-
-          # System Startup settings
-          system.startup = {
-            chime = false;
+          casks = [
+            "1password"
+            "arc"
+            "betterdisplay"
+            "discord"
+            "figma"
+            "notion"
+            "postman"
+            "tower"
+            "zed"
+            "zoom"
+            "airbuddy"
+            "linear-linear"
+          ];
+          masApps = {
+            "1Password Safari" = 1569813296;
+            "Flighty" = 1358823008;
+            "Home Assistant" = 1099568401;
+            "Microsoft Excel" = 462058435;
+            "Microsoft PowerPoint" = 462062816;
+            "Microsoft Word" = 462054704;
+            "Reeder Classic" = 1529448980;
+            "TestFlight" = 899247664;
+            "WhatsApp" = 310633997;
+            "Telegram" = 747648890;
           };
         };
+
+        # System Settings
+        system.defaults = {
+          CustomUserPreferences = {
+            "com.apple.Music" = {
+              userWantsPlaybackNotifications = false;
+            };
+          };
+          dock = {
+            autohide = true;
+            autohide-delay = 0.0;
+            autohide-time-modifier = 0.4;
+            # Do not automatically rearrange spaces (Annoying!!)
+            mru-spaces = false;
+            expose-animation-duration = 0.4;
+            launchanim = true;
+            mineffect = "genie";
+            minimize-to-application = true;
+            orientation = "bottom";
+            show-process-indicators = true;
+            show-recents = false;
+            static-only = false;
+            persistent-apps = [
+              "/Applications/Arc.app"
+
+              "${pkgs.vscode.outPath}/Applications/Visual Studio Code.app"
+              "/Applications/Zed.app"
+              "${pkgs.iterm2.outPath}/Applications/iTerm2.app"
+
+              "/Applications/1Password.app"
+              "/Applications/Slack.app"
+              "/Applications/Discord.app"
+              "/Applications/Linear.app"
+
+              "/System/Applications/Music.app"
+              "/System/Applications/Calendar.app"
+
+              "/System/Applications/Mail.app"
+              "/System/Applications/Messages.app"
+              "/Applications/WhatsApp.app"
+              "/Applications/Telegram.app"
+
+              "/System/Applications/Home.app"
+              "/System/Applications/App Store.app"
+              "/System/Applications/System Settings.app"
+            ];
+          };
+          finder = {
+            AppleShowAllExtensions = true;
+            AppleShowAllFiles = false;
+            FXDefaultSearchScope = "SCcf";
+            FXEnableExtensionChangeWarning = false;
+            FXPreferredViewStyle = "clmv";
+            QuitMenuItem = false;
+            ShowPathbar = true;
+            ShowStatusBar = false;
+          };
+          loginwindow = {
+            autoLoginUser = null;
+            DisableConsoleAccess = false;
+            GuestEnabled = false;
+            LoginwindowText = "micha.de.vries@surrealdb.com";
+            PowerOffDisabledWhileLoggedIn = false;
+            RestartDisabled = false;
+            RestartDisabledWhileLoggedIn = false;
+            SHOWFULLNAME = false;
+            ShutDownDisabled = false;
+            ShutDownDisabledWhileLoggedIn = false;
+            SleepDisabled = false;
+          };
+          screencapture = {
+            disable-shadow = true;
+            location = "~/Pictures/screenshots";
+            show-thumbnail = true;
+            type = "png";
+          };
+          WindowManager = {
+            HideDesktop = true;
+            StandardHideDesktopIcons = true;
+            GloballyEnabled = true;
+          };
+        };
+
+        # System Startup settings
+        system.startup = {
+          chime = false;
+        };
+      };
     in
     {
       # Build darwin flake using:

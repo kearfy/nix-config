@@ -32,6 +32,8 @@
       github.copilot-chat
       wmaurer.change-case
       million.million-lint
+      yoavbls.pretty-ts-errors
+      github.vscode-github-actions
     ];
 
     userSettings = {

@@ -8,7 +8,9 @@
       sr = "surreal sql --conn memory --user root --pass root --ns test --db test --pretty";
     };
     initExtra = ''
-      PATH=$PATH:/Users/micha/.cargo/bin
+      CC=/opt/homebrew/Cellar/llvm/19.1.6/bin/clang
+      AR=/opt/homebrew/Cellar/llvm/19.1.6/bin/llvm-ar
+      PATH=/opt/homebrew/opt/llvm/bin:/Users/micha/.cargo/bin:$PATH
     '';
   };
 
