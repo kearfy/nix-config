@@ -70,10 +70,12 @@
           pkgs.pnpm
           pkgs.ghostscript
           pkgs.graphicsmagick
+          pkgs.vscode
+          pkgs.zed-editor
         ];
 
         # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
+        nix.enable = true;
         nix.package = pkgs.nix;
 
         # Necessary for using flakes on this system.
@@ -167,7 +169,7 @@
               "/Applications/Arc.app"
 
               "${pkgs.vscode.outPath}/Applications/Visual Studio Code.app"
-              "/Applications/Zed.app"
+              "${pkgs.zed-editor.outPath}/Applications/Zed.app"
               "${pkgs.iterm2.outPath}/Applications/iTerm2.app"
 
               "/Applications/1Password.app"
