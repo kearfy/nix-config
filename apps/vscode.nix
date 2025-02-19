@@ -34,6 +34,8 @@
       million.million-lint
       yoavbls.pretty-ts-errors
       github.vscode-github-actions
+      usernamehw.errorlens
+      maattdd.gitless
     ];
 
     userSettings = {
