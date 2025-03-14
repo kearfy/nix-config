@@ -7,6 +7,10 @@
       lg = "lazygit";
       sr = "surreal sql --conn memory --user root --pass root --ns test --db test --pretty";
     };
+    initExtraFirst = ''
+      # Disable compfix to avoid the insecure directories warning
+      ZSH_DISABLE_COMPFIX=true
+    '';
     initExtra = ''
       CC=/opt/homebrew/Cellar/llvm/19.1.6/bin/clang
       AR=/opt/homebrew/Cellar/llvm/19.1.6/bin/llvm-ar

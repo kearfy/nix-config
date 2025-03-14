@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  username = "micha";
+  username = "personal";
 in
 import ./base-home.nix { inherit config pkgs username; }

@@ -165,12 +165,15 @@
             show-process-indicators = true;
             show-recents = false;
             static-only = false;
+            tilesize = 40;
+            magnification = true;
             persistent-apps = [
               "/Applications/Arc.app"
 
               "${pkgs.vscode.outPath}/Applications/Visual Studio Code.app"
               "${pkgs.zed-editor.outPath}/Applications/Zed.app"
               "${pkgs.iterm2.outPath}/Applications/iTerm2.app"
+              "/Applications/Claude.app" # Installed manually atm
 
               "/Applications/1Password.app"
               "/Applications/Slack.app"
@@ -259,12 +262,17 @@
           darwinConfiguration
           {
             users.users.micha.home = "/Users/micha";
+            users.users.personal.home = "/Users/personal";
           }
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.micha = import ./home.nix;
+            home-manager.users.personal = import ./personal.nix;
+            
+            # Add this line to handle file conflicts
+            home-manager.backupFileExtension = "backup";
 
             home-manager.extraSpecialArgs = {
               inherit inputs nix-vscode-extensions;
